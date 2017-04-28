@@ -12,7 +12,7 @@
 
 # Styles
 
-Upload to CDN, update query string within inject.js to pull latest
+Upload to CDN, flush
 
 # Set up
 
