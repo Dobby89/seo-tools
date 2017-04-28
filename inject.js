@@ -37,7 +37,7 @@
     var validateDesc = domDesc <= 160 ? 'valid-seo' : 'invalid-seo';
     var validateH1 = h1s === 1 ? 'valid-seo' : 'invalid-seo';
     var altDropDown = missingAlts ? '<div class="more-info">' + '<ul class="hide">' + missingAlts.join('') + '</ul></div>' : '';
-    var moreInfoBtn = '<span class="more-info-button"> more info...</span>';
+    var moreInfoBtn = missingAlts.length ? '<span class="more-info-button"> more info...</span>' : '';
 
     // header tag hierarchy check
 
