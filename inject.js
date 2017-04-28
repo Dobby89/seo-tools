@@ -10,6 +10,7 @@
 	var domDesc = document.querySelector('meta[name="description"]').content.length;
 	var domImages = document.getElementsByTagName('img');
 	var domImagesAlt = 0;
+	var h1s = document.querySelectorAll('h1').length;
 
 	// loops
 
@@ -18,19 +19,20 @@
 			domImagesAlt++;
 		}
 	}
-	var h1s = document.querySelectorAll('h1').length;
 
 	// validation
 
 	var validateTitle = domTitle >= 55 && domTitle <= 60 ? 'green' : 'red';  
 	var validateImages = domImages.length === domImagesAlt ? 'green' : 'red';
+	var validateDesc = domDesc <= 160 ? 'green' : 'red';
+	var validateH1 = h1s === 1 ? 'green' : 'red';
 
 	// strings
 
 	var domTitleString = '<p style="margin: 10px; color:' + validateTitle + '">the title is ' + domTitle + ' chars long</p>';
-	var domDescString = '<p style="margin: 10px;">the description length is ' + domDesc + '</p>';
+	var domDescString = '<p style="margin: 10px; color:' + validateDesc + '">the description length is ' + domDesc + '</p>';
 	var domImagesStrings = '<p style="margin: 10px; color:' + validateImages + '">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags</p>';
-	var domH1String = '<p style="margin: 10px;">there are ' + h1s + ' h1\'s on the page</p>';
+	var domH1String = '<p style="margin: 10px; color:' + validateH1 + '">there are ' + h1s + ' h1\'s on the page</p>';
 
 	// entry & styling
 
