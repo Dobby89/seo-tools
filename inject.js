@@ -8,11 +8,26 @@
 
 	var domTitle = document.title.length;
 	var domDesc = document.querySelector('meta[name="description"]').content.length;
+	var domImages = document.getElementsByTagName('img');
+	var domImagesAlt = 0;
+	var domImageTitle = 0;
+
+	// loops
+
+	for (i = 0; i < domImages.length; i++) {
+		if(domImages[i].alt) {
+			domImagesAlt++;
+		}
+		if(domImages[i].title) {
+			domImageTitle++;
+		}
+	}
 
 	// strings
 
 	var domTitleString = '<p style="margin: 10px;">the title is ' + domTitle + ' chars long</p>';
 	var domDescString = '<p style="margin: 10px;">the description length is ' + domDesc + '</p>';
+	var domImagesStrings = '<p style=margin: 10px;">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags and ' + domImageTitle + ' have titles.</p>';
 
 	// entry & styling
 
@@ -30,7 +45,7 @@
 
 	// format the entry of all strings
 
-	div.innerHTML = domDescString + domTitleString + closeElm;
+	div.innerHTML = domImagesStrings + domDescString + domTitleString + closeElm;
 
 	document.body.appendChild(div);
 
