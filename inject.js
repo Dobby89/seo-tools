@@ -48,7 +48,7 @@
 
 	// format the entry of all strings
 
-	div.innerHTML = domImagesStrings + domDescString + domTitleString + closeElm;
+	div.innerHTML = domH1String + domImagesStrings + domDescString + domTitleString + closeElm;
 
 	document.body.appendChild(div);
 
