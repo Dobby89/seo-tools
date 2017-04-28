@@ -2,15 +2,17 @@
 
 	// elms
 
-	var closeElm = '<button style="margin: 2%;" class="ao-seo-tool-close">close</button>';
+	var closeElm = '<button style="margin: 2%; float:left;" class="ao-seo-tool-close">close</button>';
 
 	// dom selectors 
 
 	var domTitle = document.title.length;
+	var domDesc = document.querySelector('meta[name="description"]').content.length;
 
 	// strings
 
-	var domTitleString = 'the title is ' + domTitle + ' chars long';
+	var domTitleString = '<p style="margin: 10px;">the title is ' + domTitle + ' chars long</p>';
+	var domDescString = '<p style="margin: 10px;">the description length is ' + domDesc + '</p>';
 
 	// entry & styling
 
@@ -28,7 +30,7 @@
 
 	// format the entry of all strings
 
-	div.innerHTML = domTitleString + closeElm;
+	div.innerHTML = domDescString + domTitleString + closeElm;
 
 	document.body.appendChild(div);
 
