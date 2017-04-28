@@ -4,7 +4,7 @@
 
 	var closeElm = '<button style="margin: 2%; float:left;" class="ao-seo-tool-close">close</button>';
 
-	// dom selectors 
+	// dom selectors
 
 	var domTitle = document.title.length;
 	var domDesc = document.querySelector('meta[name="description"]').content.length;
@@ -22,12 +22,14 @@
 			domImageTitle++;
 		}
 	}
+	var h1s = document.querySelectorAll('h1').length;
 
 	// strings
 
 	var domTitleString = '<p style="margin: 10px;">the title is ' + domTitle + ' chars long</p>';
 	var domDescString = '<p style="margin: 10px;">the description length is ' + domDesc + '</p>';
 	var domImagesStrings = '<p style=margin: 10px;">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags and ' + domImageTitle + ' have titles.</p>';
+	var domH1String = '<p style="margin: 10px;">there are ' + h1s + ' h1\'s on the page</p>';
 
 	// entry & styling
 
