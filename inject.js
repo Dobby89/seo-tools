@@ -10,7 +10,6 @@
 	var domDesc = document.querySelector('meta[name="description"]').content.length;
 	var domImages = document.getElementsByTagName('img');
 	var domImagesAlt = 0;
-	var domImageTitle = 0;
 
 	// loops
 
@@ -18,29 +17,19 @@
 		if(domImages[i].alt) {
 			domImagesAlt++;
 		}
-		if(domImages[i].title) {
-			domImageTitle++;
-		}
 	}
 	var h1s = document.querySelectorAll('h1').length;
 
 	// validation
 
-	function validateTitle(title) {
-		if(title >= 55 && title <= 60) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	var validateTitle = domTitle >= 55 && domTitle <= 60 ? 'green' : 'red';  
+	var validateImages = domImages.length === domImagesAlt ? 'green' : 'red';
 
 	// strings
 
 	var domTitleString = '<p style="margin: 10px; color:' + validateTitle + '">the title is ' + domTitle + ' chars long</p>';
 	var domDescString = '<p style="margin: 10px;">the description length is ' + domDesc + '</p>';
-	var domImagesStrings = '<p style=margin: 10px;">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags and ' + domImageTitle + ' have titles.</p>';
+	var domImagesStrings = '<p style="margin: 10px; color:' + validateImages + '">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags</p>';
 	var domH1String = '<p style="margin: 10px;">there are ' + h1s + ' h1\'s on the page</p>';
 
 	// entry & styling
