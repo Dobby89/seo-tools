@@ -27,14 +27,15 @@
     margin-bottom: 10px;
 }
 
-.ao-seo-tool-container .more-info div.hide {
+.ao-seo-tool-container .more-info ul.hide {
     display: none;
 }
 
-.ao-seo-tool-container p.array-item {
+.ao-seo-tool-container li.array-item {
     font-size: 14px;
     margin: 0;
     padding: 0;
+    color: #e7e7e7;
 }
 
 .ao-seo-tool-container p.seo-title {
