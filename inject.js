@@ -25,7 +25,7 @@
 			domImagesAlt++;
 		} else {
             var src = domImages[i].src;
-			domImages[i].style.border = "5px solid red";
+			domImages[i].classList.add("seo-image-error");
             missingAlts.push('<li class="array-item" title="' + src + '">' + (src.length > 50 ? src.substring(0,50) + '...' : src) + '</li>');
 		}
 	}
@@ -38,6 +38,7 @@
     var validateH1 = h1s === 1 ? 'valid-seo' : 'invalid-seo';
     var altDropDown = missingAlts ? '<div class="more-info">' + '<ul class="hide">' + missingAlts.join('') + '</ul></div>' : '';
     var moreInfoBtn = missingAlts.length ? '<span class="more-info-button"> more info...</span>' : '';
+    var showMeBtn = missingAlts.length ? '<span class="show-me-button"> show me...</span>' : '';
 
     // header tag hierarchy check
 
@@ -87,13 +88,12 @@
         }
     });
 
-
 	// strings
 
 	var elmTitle = '<p class="seo-title">ao-seo-tool</h1>';
     var domTitleString = '<p class="' + validateTitle + '">Title length: ' + domTitle + '</p>';
     var domDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domDesc + '</p>';
-    var domImagesStrings = '<p style="display: inline" class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + domImagesAlt + ' </p>' + moreInfoBtn + altDropDown;
+    var domImagesStrings = '<p style="display: inline" class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + domImagesAlt + ' </p>' + moreInfoBtn + showMeBtn + altDropDown;
     var domH1String = '<p class="' + validateH1 + '">H1 count: ' + h1s + ' </p>';
 
 	// entry & styling
@@ -120,6 +120,18 @@
     if(moreInfo) {
         moreInfoButton.addEventListener("click", function() {
             document.querySelector('.more-info ul').classList.toggle('hide');
+        });
+    }
+
+    var showMeButton = document.querySelector('.show-me-button');
+    if(missingAlts) {
+        showMeButton.addEventListener("click", function() {
+
+            var elms = document.querySelectorAll('.seo-error');
+            
+            for(var i = 0; i < elms.length; i++) {
+                elms[i].style.border = '5px solid red';
+            }
         });
     }
 
