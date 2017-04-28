@@ -127,7 +127,7 @@
     if(missingAlts) {
         showMeButton.addEventListener("click", function() {
 
-            var elms = document.querySelectorAll('.seo-error');
+            var elms = document.querySelectorAll('.seo-image-error');
             
             for(var i = 0; i < elms.length; i++) {
                 elms[i].style.border = '5px solid red';
