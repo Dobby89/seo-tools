@@ -55,6 +55,8 @@
         };
     });
 
+    // validate header tags, checking that the correct hierarchy has been followed
+    // e.g. Only h4 tags should be used if h3 tags have been used
     headerSizes.reverse().forEach(function (item, index, list) {
 
         var isValid = true;
@@ -68,6 +70,7 @@
         headerSizes[index]['isValid'] = isValid;
     });
 
+    // display the header validation
     var domHeaderString = '';
     headerSizes.reverse().forEach(function (item, index, list) {
         if (!item.isValid) {
