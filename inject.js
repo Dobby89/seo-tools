@@ -16,6 +16,7 @@
     var domImages = document.getElementsByTagName('img');
     var domImagesAlt = 0;
     var h1s = document.querySelectorAll('h1').length;
+    var missingAlts = [];
 
     // loops
 
@@ -24,6 +25,7 @@
 			domImagesAlt++;
 		} else {
 			domImages[i].style.border = "5px solid red";
+            missingAlts.push('<p class="array-item">' + domImages[i].src + '</p>');
 		}
 	}
 
@@ -33,6 +35,8 @@
     var validateImages = domImages.length === domImagesAlt ? 'valid-seo' : 'invalid-seo';
     var validateDesc = domDesc <= 160 ? 'valid-seo' : 'invalid-seo';
     var validateH1 = h1s === 1 ? 'valid-seo' : 'invalid-seo';
+    var altDropDown = missingAlts ? '<div class="more-info">' + '<div class="hide">' + missingAlts.toString() + '</div></div>' : '';
+    var moreInfoBtn = '<span class="more-info-button"> more info...</span>';
 
     // header tag hierarchy check
 
@@ -70,13 +74,13 @@
 	var elmTitle = '<p class="seo-title">ao-seo-tool</h1>';
     var domTitleString = '<p class="' + validateTitle + '">Title length: ' + domTitle + '</p>';
     var domDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domDesc + '</p>';
-    var domImagesStrings = '<p class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + domImagesAlt + ' </p>';
+    var domImagesStrings = '<p style="display: inline" class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + domImagesAlt + ' </p>' + moreInfoBtn + altDropDown;
     var domH1String = '<p class="' + validateH1 + '">H1 count: ' + h1s + ' </p>';
 
 	// entry & styling
 
 	var div = document.createElement('div');
-	var styleRef = '<link href="https://media.ao.com/uk/hackday/seo-tool/styles.css?v=2" rel="stylesheet" type="text/css">';
+	var styleRef = '<link href="https://media.ao.com/uk/hackday/seo-tool/styles.css" rel="stylesheet" type="text/css">';
 	div.classList.add('ao-seo-tool-container');
 
 	// format the entry of all strings
@@ -91,6 +95,14 @@
 	closeBtn.addEventListener("click", function(){
 		document.querySelector(".ao-seo-tool-container").outerHTML='';
 	});
+
+    var moreInfoButton = document.querySelector('.more-info-button');
+    var moreInfo = document.querySelector('.more-info');
+    if(moreInfo) {
+        moreInfoButton.addEventListener("click", function() {
+            document.querySelector('.more-info div').classList.toggle('hide');
+        });
+    }
 
 	// check it actually works!
 

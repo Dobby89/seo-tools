@@ -23,6 +23,20 @@
     text-align: center;
 }
 
+.ao-seo-tool-container .more-info {
+    margin-bottom: 10px;
+}
+
+.ao-seo-tool-container .more-info div.hide {
+    display: none;
+}
+
+.ao-seo-tool-container p.array-item {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
 .ao-seo-tool-container p.seo-title {
     font-size: 36px;
     text-decoration: underline;
@@ -40,4 +54,11 @@
 
 .ao-seo-tool-container p.invalid-seo {
     color: #f44336;
+}
+
+.ao-seo-tool-container span.more-info-button {
+    font-size: 12px;
+    color: #e7e7e7;
+    display: inline;
+    padding-left: 10px;
 }
