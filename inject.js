@@ -1,5 +1,10 @@
 (function() {
 
+    if(document.querySelector(".ao-seo-tool-container")) {
+        document.querySelector(".ao-seo-tool-container").outerHTML='';
+        return false;
+    }
+
 	// elms
 
 	var closeElm = '<button class="ao-seo-tool-close">close</button>';
