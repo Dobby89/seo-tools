@@ -70,11 +70,14 @@
 
     var domHeaderString = '';
     headerSizes.reverse().forEach(function (item, index, list) {
-
         if (!item.isValid) {
             domHeaderString += '<p class="invalid-seo">H' + item.headerSize + ' count: ' + item.count + ' <b>but NO h' + index + ' tags were found.</b></p>'
 
-            document.styleSheets[0].insertRule('h' + item.headerSize + ' { border: 5px solid red; }', 0);
+            // Create a style element and add styles to highlights issues
+            var style = document.createElement("style");
+            document.head.appendChild(style);
+            sheet = style.sheet;
+            sheet.insertRule('h' + item.headerSize + ' { border: 5px solid red; }', 0);
 
         } else if (item.headerSize > 1) {
             domHeaderString += '<p class="valid-seo">H' + item.headerSize + ' count: ' + item.count + '</p>';
