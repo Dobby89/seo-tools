@@ -7,7 +7,7 @@
 	// dom selectors
 
 	var domTitle = document.title.length;
-	var domDesc = document.querySelector('meta[name="description"]').content.length || '';
+	var domDesc = document.querySelector('meta[name="description"]').content.length;
 	var domImages = document.getElementsByTagName('img');
 	var domImagesAlt = 0;
 	var h1s = document.querySelectorAll('h1').length;
@@ -18,6 +18,7 @@
 		if(domImages[i].alt) {
 			domImagesAlt++;
 		} else {
+			domImages[i].style.border = "5px solid red";
 		}
 	}
 
