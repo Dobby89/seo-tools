@@ -36,9 +36,7 @@
 
     // header tag hierarchy check
 
-    // var headerSizes = [];
     var headerSizseRange = [1,2,3,4,5,6];
-    // headerSizseRange.forEach(function(size) {
     var headerSizes = headerSizseRange.map(function(size) {
         var foundHeaders = document.querySelectorAll('h' + size) || [];
         var foundHeaderContent = Array.from(foundHeaders).map(function (header) {
@@ -52,25 +50,20 @@
         };
     });
 
-    console.log(headerSizes);
-
-    var headerFeedback = [];
     headerSizes.reverse().forEach(function (item, index, list) {
 
-        var feedbackString = '';
-        feedbackString += 'There are ' + item.count + ' h' + item.headerSize + ' tags';
+        var isValid = true;
 
-        if (item.count >= 1) {
-            console.log(index + 1);
+        if (item.count >= 1 && item.headerSize > 1) {
             if (list[index + 1] && list[index + 1].count == 0) {
-                feedbackString += ' but NO h' + (index + 1) + 'tags';
+                isValid = false;
             }
         }
 
-        headerFeedback.push(feedbackString);
+        headerSizes[index]['isValid'] = isValid;
     });
 
-    console.log(headerFeedback);
+    console.log(headerSizes.reverse());
 
 	// strings
 
