@@ -10,6 +10,10 @@
 ⋅⋅5. All images have img alt text
 ⋅⋅6. All images have Image Title
 
+# Styles
+
+Upload to CDN, update query string within inject.js to pull latest
+
 # Set up
 
 * Open chrome -> more tools -> extensions

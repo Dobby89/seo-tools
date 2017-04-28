@@ -2,7 +2,7 @@
 
 	// elms
 
-	var closeElm = '<button style="margin: 2%; float:left;" class="ao-seo-tool-close">close</button>';
+	var closeElm = '<button class="ao-seo-tool-close">close</button>';
 
 	// dom selectors
 
@@ -24,10 +24,10 @@
 
     // validation
 
-    var validateTitle = domTitle >= 55 && domTitle <= 60 ? 'green' : 'red';
-    var validateImages = domImages.length === domImagesAlt ? 'green' : 'red';
-    var validateDesc = domDesc <= 160 ? 'green' : 'red';
-    var validateH1 = h1s === 1 ? 'green' : 'red';
+    var validateTitle = domTitle >= 55 && domTitle <= 60 ? 'valid-seo' : 'invalid-seo';
+    var validateImages = domImages.length === domImagesAlt ? 'valid-seo' : 'invalid-seo';
+    var validateDesc = domDesc <= 160 ? 'valid-seo' : 'invalid-seo';
+    var validateH1 = h1s === 1 ? 'valid-seo' : 'invalid-seo';
 
     // header tag hierarchy check
 
@@ -69,30 +69,23 @@
 
 	// strings
 
-    var domTitleString = '<p style="margin: 10px; color:' + validateTitle + '">the title is ' + domTitle + ' chars long</p>';
-    var domDescString = '<p style="margin: 10px; color:' + validateDesc + '">the description length is ' + domDesc + '</p>';
-    var domImagesStrings = '<p style="margin: 10px; color:' + validateImages + '">there are ' + domImages.length + ' images, of these, ' + domImagesAlt + ' have alt tags</p>';
-    var domH1String = '<p style="margin: 10px; color:' + validateH1 + '">there are ' + h1s + ' h1\'s on the page</p>';
+	var elmTitle = '<p class="seo-title">ao-seo-tool</h1>';
+    var domTitleString = '<p class="' + validateTitle + '">Title length: ' + domTitle + '</p>';
+    var domDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domDesc + '</p>';
+    var domImagesStrings = '<p class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + domImagesAlt + ' </p>';
+    var domH1String = '<p class="' + validateH1 + '">H1 count: ' + h1s + ' </p>';
 
 	// entry & styling
 
 	var div = document.createElement('div');
+	var styleRef = '<link href="https://media.ao.com/uk/hackday/seo-tool/styles.css?v=2" rel="stylesheet" type="text/css">';
 	div.classList.add('ao-seo-tool-container');
-	div.style.position = 'fixed';
-	div.style.top = 0;
-	div.style.right = 0;
-	div.style.height = '100%';
-	div.style.width = '100%';
-	div.style.zIndex = '99999999999999';
-	div.style.backgroundColor = '#000';
-	div.style.color = '#fff';
-	div.style.fontSize = '20px';
 
 	// format the entry of all strings
 
-	div.innerHTML = domH1String + domImagesStrings + domDescString + domTitleString + closeElm;
+	div.innerHTML = styleRef + elmTitle + domH1String + domImagesStrings + domDescString + domTitleString + closeElm;
 
-	document.body.appendChild(div);
+	document.body.insertBefore(div, document.body.firstChild);
 
 	// event listeners
 

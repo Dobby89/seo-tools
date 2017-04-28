@@ -1,0 +1,43 @@
+.ao-seo-tool-container button.ao-seo-tool-close {
+    background-color: #008CBA;
+    color: #e7e7e7;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+}
+
+.ao-seo-tool-container button.ao-seo-tool-close:hover {
+    color: #008CBA;
+    background-color: #e7e7e7;
+}
+
+.ao-seo-tool-container {
+    background-color: #555555;
+    height: auto;
+    width: 100%;
+    font-size: 16px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.ao-seo-tool-container p.seo-title {
+    font-size: 36px;
+    text-decoration: underline;
+    margin-bottom: 22px;
+}
+
+.ao-seo-tool-container p {
+    color: #e7e7e7;
+    margin-bottom: 10px;
+}
+
+.ao-seo-tool-container p.valid-seo {
+    color: #4CAF50;
+}
+
+.ao-seo-tool-container p.invalid-seo {
+    color: #f44336;
+}
