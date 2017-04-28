@@ -1,12 +1,20 @@
 (function() {
 
-	var closeElm = '<button style="margin: 2%;" class="ao-seo-tool-close">close</button>';
-	var domtitle = document.title.length;
+	// elms
 
-	domTitle = 'the title is ' + domtitle + ' chars long';
+	var closeElm = '<button style="margin: 2%;" class="ao-seo-tool-close">close</button>';
+
+	// dom selectors 
+
+	var domTitle = document.title.length;
+
+	// strings
+
+	var domTitleString = 'the title is ' + domTitle + ' chars long';
+
+	// entry & styling
 
 	var div = document.createElement('div');
-	
 	div.classList.add('ao-seo-tool-container');
 	div.style.position = 'fixed';
 	div.style.top = 0;
@@ -18,15 +26,20 @@
 	div.style.color = '#fff';
 	div.style.fontSize = '20px';
 
-	div.innerHTML = domTitle + closeElm;
+	// format the entry of all strings
+
+	div.innerHTML = domTitleString + closeElm;
 
 	document.body.appendChild(div);
 
-	var closeBtn = document.querySelector('.ao-seo-tool-close');
+	// event listeners
 
+	var closeBtn = document.querySelector('.ao-seo-tool-close');
 	closeBtn.addEventListener("click", function(){
 		document.querySelector(".ao-seo-tool-container").outerHTML='';
 	});
+
+	// check it actually works!
 
 	console.warn("injected into self, giggity.");
 
