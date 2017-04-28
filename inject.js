@@ -10,6 +10,44 @@
 	var domDesc = document.querySelector('meta[name="description"]').content.length;
 	var h1s = document.querySelectorAll('h1').length;
 
+	// header tag hierarchy check
+
+	// var headerSizes = [];
+	var headerSizseRange = [1,2,3,4,5,6];
+	// headerSizseRange.forEach(function(size) {
+	var headerSizes = headerSizseRange.map(function(size) {
+		var foundHeaders = document.querySelectorAll('h' + size) || [];
+		var foundHeaderContent = Array.from(foundHeaders).map(function (header) {
+			return header.textContent;
+		});
+
+		return {
+			headerSize: size,
+			count: foundHeaders.length,
+			content: foundHeaderContent
+		};
+	});
+
+	console.log(headerSizes);
+
+	var headerFeedback = [];
+	headerSizes.reverse().forEach(function (item, index, list) {
+
+		var feedbackString = '';
+		feedbackString += 'There are ' + item.count + ' h' + item.headerSize + ' tags';
+
+		if (item.count >= 1) {
+			console.log(index + 1);
+			if (list[index + 1] && list[index + 1].count == 0) {
+				feedbackString += ' but NO h' + (index + 1) + 'tags';
+			}
+		}
+
+		headerFeedback.push(feedbackString);
+	});
+
+	console.log(headerFeedback);
+
 	// strings
 
 	var domTitleString = '<p style="margin: 10px;">the title is ' + domTitle + ' chars long</p>';
