@@ -67,7 +67,19 @@
         headerSizes[index]['isValid'] = isValid;
     });
 
-    console.log(headerSizes.reverse());
+    var domHeaderString = '';
+    headerSizes.reverse().forEach(function (item, index, list) {
+
+        if (!item.isValid) {
+            domHeaderString += '<p class="invalid-seo">H' + item.headerSize + ' count: ' + item.count + ' <b>but NO h' + index + ' tags were found.</b></p>'
+
+            document.styleSheets[0].insertRule('h' + item.headerSize + ' { border: 5px solid red; }', 0);
+
+        } else if (item.headerSize > 1) {
+            domHeaderString += '<p class="valid-seo">H' + item.headerSize + ' count: ' + item.count + '</p>';
+        }
+    });
+
 
 	// strings
 
@@ -85,7 +97,7 @@
 
 	// format the entry of all strings
 
-	div.innerHTML = styleRef + elmTitle + domH1String + domImagesStrings + domDescString + domTitleString + closeElm;
+	div.innerHTML = styleRef + elmTitle + domH1String + domHeaderString + domImagesStrings + domDescString + domTitleString + closeElm;
 
 	document.body.insertBefore(div, document.body.firstChild);
 
