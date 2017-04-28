@@ -24,8 +24,9 @@
 		if(domImages[i].alt) {
 			domImagesAlt++;
 		} else {
+            var src = domImages[i].src;
 			domImages[i].style.border = "5px solid red";
-            missingAlts.push('<p class="array-item">' + domImages[i].src + '</p>');
+            missingAlts.push('<li class="array-item" title="' + src + '">' + (src.length > 50 ? src.substring(0,50) + '...' : src) + '</li>');
 		}
 	}
 
@@ -35,7 +36,7 @@
     var validateImages = domImages.length === domImagesAlt ? 'valid-seo' : 'invalid-seo';
     var validateDesc = domDesc <= 160 ? 'valid-seo' : 'invalid-seo';
     var validateH1 = h1s === 1 ? 'valid-seo' : 'invalid-seo';
-    var altDropDown = missingAlts ? '<div class="more-info">' + '<div class="hide">' + missingAlts.toString() + '</div></div>' : '';
+    var altDropDown = missingAlts ? '<div class="more-info">' + '<ul class="hide">' + missingAlts.join('') + '</ul></div>' : '';
     var moreInfoBtn = '<span class="more-info-button"> more info...</span>';
 
     // header tag hierarchy check
@@ -112,7 +113,7 @@
     var moreInfo = document.querySelector('.more-info');
     if(moreInfo) {
         moreInfoButton.addEventListener("click", function() {
-            document.querySelector('.more-info div').classList.toggle('hide');
+            document.querySelector('.more-info ul').classList.toggle('hide');
         });
     }
 
