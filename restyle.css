@@ -1,0 +1,160 @@
+.ao-seo-tool {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.ao-seo-tool-container {
+    position: relative;
+    min-height: 400px;
+    background: #f7f7f7;
+    color: #222;
+}
+
+.ao-seo-tool-container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 180px;
+    background: #222;
+    z-index: 0;
+}
+
+.ao-seo-tool-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: inline-block;
+    padding: 10px 12px;
+    background: #9e0000;
+    color: #fff;
+    border: 0;
+    text-decoration: none;
+    line-height: 1;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 1000px;
+}
+
+.ao-seo-tool-close:hover {
+    background: #ae0000;
+}
+
+.ao-seo-tool-navigation {
+    position: relative;
+    z-index: 1;
+    float: left;
+    width: 180px;
+    padding: 10px 0;
+    color: #fff;
+}
+
+.ao-seo-tool-tab-dashboard {
+    margin-left: 210px;
+    padding: 70px 30px 30px 0;
+}
+
+.ao-seo-tool-title {
+    padding: 10px 15px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.ao-seo-tool-tabs {
+    margin: 10px 0;
+    border-top: 1px solid #333;
+}
+
+.ao-seo-tool-tab {
+    position: relative;
+    padding: 12px 15px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+}
+
+.ao-seo-tool-tab:hover {
+    background: #2f2f2f;
+}
+
+.ao-seo-tool-tab::before {
+    margin-right: 10px;
+}
+
+.ao-seo-tool-tab.valid::before {
+    content: '\2714';
+    color: #4CAF50;
+}
+
+.ao-seo-tool-tab.invalid::before {
+    content: '\274C';
+    font-size: 13px;
+    color: #9e0000;
+}
+
+.ao-seo-tool-tab.active::after {
+    position: absolute;
+    top: 50%;
+    right: -1px;
+    content: '';
+    width: 0;
+    height: 0;
+    margin-top: -8px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #f7f7f7;
+}
+
+.ao-seo-tool-tab-content {
+    display: none;
+}
+
+.ao-seo-tool-tab-content.active {
+    display: block;
+}
+
+.ao-seo-tool-table {
+    display: table;
+    width: 100%;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.ao-seo-tool-table-row {
+    display: table-row;
+}
+
+.ao-seo-tool-table-cell,
+.ao-seo-tool-table-head {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.ao-seo-tool-table-cell img {
+    display: block;
+    max-width: 100px;
+    max-height: 100px;
+    margin: auto;
+}
+
+.ao-seo-tool-table-head {
+    font-weight: 600;
+}
+
+.ao-seo-tool-link {
+    color: #008CBA;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ao-seo-tool-link:hover {
+    text-decoration: none;
+}
