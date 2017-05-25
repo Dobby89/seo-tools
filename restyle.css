@@ -1,11 +1,9 @@
 .ao-seo-tool {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    min-height: 100%;
+    display: block;
+    width: 100%;
+    height: auto;
     font-family: Arial, sans-serif;
+    font-size: 16px;
 }
 
 .ao-seo-tool-container {
@@ -27,26 +25,6 @@
     z-index: 0;
 }
 
-.ao-seo-tool-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: inline-block;
-    padding: 10px 12px;
-    background: #9e0000;
-    color: #fff;
-    border: 0;
-    text-decoration: none;
-    line-height: 1;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 1000px;
-}
-
-.ao-seo-tool-close:hover {
-    background: #ae0000;
-}
-
 .ao-seo-tool-navigation {
     position: relative;
     z-index: 1;
@@ -57,12 +35,54 @@
 }
 
 .ao-seo-tool-tab-dashboard {
-    margin-left: 210px;
-    padding: 70px 30px 30px 0;
+    margin-left: 180px;
+}
+
+.ao-seo-tool-tab-dashboard-header {
+    display: table;
+    padding: 20px;
+    background: #f1f1f1;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.ao-seo-tool-tab-dashboard-header-summary {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.ao-seo-tool-tab-dashboard-header-buttons {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.ao-seo-tool-close {
+    display: inline-block;
+    padding: 10px 12px;
+    background: #ddd;
+    color: #444;
+    border: 0;
+    text-decoration: none;
+    line-height: 1;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 1000px;
+    white-space: nowrap;
+}
+
+.ao-seo-tool-close:hover {
+    background: #ccc;
+}
+
+.ao-seo-tool-tab-dashboard-content {
+    position: relative;
+    padding: 20px;
 }
 
 .ao-seo-tool-title {
-    padding: 10px 15px;
+    padding: 19px 15px;
     font-size: 22px;
     font-weight: 600;
 }
@@ -77,28 +97,33 @@
     padding: 12px 15px;
     border-bottom: 1px solid #333;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .ao-seo-tool-tab:hover {
     background: #2f2f2f;
 }
 
+.ao-seo-tool-tab.ao-seo-tool-active {
+    background: #333;
+}
+
 .ao-seo-tool-tab::before {
     margin-right: 10px;
 }
 
-.ao-seo-tool-tab.valid::before {
+.ao-seo-tool-tab.ao-seo-tool-valid::before {
     content: '\2714';
     color: #4CAF50;
 }
 
-.ao-seo-tool-tab.invalid::before {
+.ao-seo-tool-tab.ao-seo-tool-invalid::before {
     content: '\274C';
-    font-size: 13px;
+    font-size: 11px;
     color: #9e0000;
 }
 
-.ao-seo-tool-tab.active::after {
+.ao-seo-tool-tab.ao-seo-tool-active::after {
     position: absolute;
     top: 50%;
     right: -1px;
@@ -115,19 +140,28 @@
     display: none;
 }
 
-.ao-seo-tool-tab-content.active {
+.ao-seo-tool-tab-content.ao-seo-tool-active {
     display: block;
 }
 
 .ao-seo-tool-table {
     display: table;
     width: 100%;
-    padding: 20px 0;
+    margin: 20px 0;
+    border-top: 1px solid #ddd;
     font-size: 14px;
 }
 
 .ao-seo-tool-table-row {
     display: table-row;
+}
+
+.ao-seo-tool-table-row.ao-seo-tool-invalid {
+    background: #ffe3df;
+}
+
+.ao-seo-tool-table-row.ao-seo-tool-valid {
+    background: #e4ffdb;
 }
 
 .ao-seo-tool-table-cell,
@@ -136,6 +170,10 @@
     vertical-align: middle;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.ao-seo-tool-table-cell {
+    word-wrap: break-word;
 }
 
 .ao-seo-tool-table-cell img {
@@ -147,6 +185,7 @@
 
 .ao-seo-tool-table-head {
     font-weight: 600;
+    background: #eee;
 }
 
 .ao-seo-tool-link {
@@ -157,4 +196,8 @@
 
 .ao-seo-tool-link:hover {
     text-decoration: none;
+}
+
+.ao-seo-tool-image-error {
+    border: 3px solid #ff0000;
 }
