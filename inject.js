@@ -7,11 +7,12 @@
 
 	// dom selectors
 
-	var domTitle = document.title.length;
-	var domDesc = document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]') : '';
+	var domMetaTitle = document.title;
+	var domMetaDesc = document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]') : '';
     var domImages = document.getElementsByTagName('img');
-    var imageAltCount = 0;
     var domH1s = document.querySelectorAll('h1');
+    var imageAltCount = 0;
+    var headerHierarchyCount = 0;
 
     var metaErrorsArray = [];
     var imageErrorsArray = [];
@@ -23,40 +24,73 @@
 
     // validation
 
-    // var validateTitle = domTitle >= 55 && domTitle <= 60 ? 'valid-seo' : 'invalid-seo';
+    // var validateTitle = domMetaTitle.length >= 55 && domMetaTitle.length <= 60 ? 'valid-seo' : 'invalid-seo';
     // var validateImages = domImages.length === imageAltCount ? 'valid-seo' : 'invalid-seo';
-    // var validateDesc = domDesc <= 160 ? 'valid-seo' : 'invalid-seo';
+    // var validateDesc = domMetaDesc <= 160 ? 'valid-seo' : 'invalid-seo';
     // var validateH1 = domH1s.length === 1 ? 'valid-seo' : 'invalid-seo';
     // var altDropDown = imageErrorsArray ? '<div class="more-info">' + '<ul class="hide">' + imageErrorsArray.join('') + '</ul></div>' : '';
     // var moreInfoBtn = imageErrorsArray.length ? '<span class="more-info-button"> more info...</span>' : '';
     // var showMeBtn = imageErrorsArray.length ? '<span class="show-me-button"> show me...</span>' : '';
 
 
-    // Meta tag validation
-    if (domDesc.content.length === 0) {
+    // Meta title validation
+    console.log(domMetaTitle);
+    if (domMetaTitle.length >= 55 && domMetaTitle.length <= 60) {
+        // valid
+        console.log(domMetaTitle);
+        metaSuccessArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-valid">
+                <div class="ao-seo-tool-table-cell">
+                    <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    The <code>&lt;title&gt;</code> tag is present and is between <b>55</b> and <b>60</b> characters.
+                </div>
+            </div>`);
+    } else if (domMetaTitle.length === 0 ) {
+        // invalid
         metaErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                 <div class="ao-seo-tool-table-cell">
-                    Meta Description
+                    <code>${htmlEscape('<title></title>')}</code>
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    The <code>&lt;title&gt;</code> tag has not been found. <b>Every</b> page must contain a <code>&lt;title&gt;</code> tag, which is between <b>55</b> and <b>60</b> characters
+                </div>
+            </div>`);
+    } else {
+        // invalid
+        metaErrorsArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-warning">
+                <div class="ao-seo-tool-table-cell">
+                    <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    The <code>&lt;title&gt;</code> tag should be between <b>55</b> and <b>60</b> characters.
+                </div>
+            </div>`);
+    }
+
+
+    // Meta description validation
+    if (domMetaDesc.content.length === 0) {
+        metaErrorsArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
+                <div class="ao-seo-tool-table-cell">
+                    <code>${htmlEscape('<meta name="description" content="">')}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     No Meta Description has been found. <b>Every</b> page must contain a Meta Description.
                 </div>
-                <div class="ao-seo-tool-table-cell">
-                    
-                </div>
             </div>`);
-    } else if (domDesc.content.length > 160) {
+    } else if (domMetaDesc.content.length > 160) {
         metaErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                 <div class="ao-seo-tool-table-cell">
-                    Meta Description
+                    <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     The Meta Description is more than <b>160</b> characters.
-                </div>
-                <div class="ao-seo-tool-table-cell">
-                    ${htmlEscape(domDesc.outerHTML)}
                 </div>
             </div>`);
     } else {
@@ -64,13 +98,10 @@
         metaSuccessArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-valid">
                 <div class="ao-seo-tool-table-cell">
-                    Meta Description
+                    <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     The Meta Description is present and is <= <b>160</b> characters.
-                </div>
-                <div class="ao-seo-tool-table-cell">
-                    ${htmlEscape(domDesc.outerHTML)}
                 </div>
             </div>`);
     }
@@ -86,34 +117,34 @@
                 <div class="ao-seo-tool-table-cell">
                     No <code>&lt;h1&gt;</code> tag has been found. <b>Every</b> page must contain a <code>&lt;h1&gt;</code> tag.
                 </div>
-                <div class="ao-seo-tool-table-cell">
-
-                </div>
             </div>`);
     } else if (domH1s.length > 1) {
+
+        var h1tags = [];
+        for (i = 0; i < domH1s.length; i++) {
+            console.log(h1tags);
+            h1tags.push(`<code>${htmlEscape(domH1s[i].outerHTML)}</code>`);
+        }
+
+        console.log(h1tags);
+
         headerErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                 <div class="ao-seo-tool-table-cell">
-                    <code>&lt;h1&gt;</code>
+                    ${h1tags.join("<br><br>")}
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     ${domH1s.length} <code>&lt;h1&gt;</code> tags have been found. There should only be <b>one</b> <code>&lt;h1&gt;</code> tag per page.
-                </div>
-                <div class="ao-seo-tool-table-cell">
-
                 </div>
             </div>`);
     } else {
         headerSuccessArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-valid">
                 <div class="ao-seo-tool-table-cell">
-                    <code>&lt;h1&gt;</code>
+                    <code>${htmlEscape(domH1s[0].outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     <code>&lt;h1&gt;</code> tag exists and is the only one on the page.
-                </div>
-                <div class="ao-seo-tool-table-cell">
-                    ${htmlEscape(domH1s[0].outerHTML)}
                 </div>
             </div>`);
     }
@@ -122,6 +153,9 @@
     var headerSizeRange = [1,2,3,4,5,6];
     var headerSizes = headerSizeRange.map(function(size) {
         var foundHeaders = document.querySelectorAll('h' + size) || [];
+
+        console.log(foundHeaders);
+
         var foundHeaderContent = Array.from(foundHeaders).map(function (header) {
             return header.textContent;
         });
@@ -152,6 +186,9 @@
     // Heading hierarchy validation
     headerSizes.reverse().forEach(function (item, index, list) {
         if (!item.isValid) {
+
+            headerHierarchyCount++;
+
             headerErrorsArray.push(`
                 <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                     <div class="ao-seo-tool-table-cell">
@@ -159,9 +196,6 @@
                     </div>
                     <div class="ao-seo-tool-table-cell">
                         <code>&lt;h${item.headerSize}&gt;</code> tag has been used but no h${index} has been found.
-                    </div>
-                    <div class="ao-seo-tool-table-cell">
-
                     </div>
                 </div>`);
 
@@ -176,6 +210,18 @@
         }
     });
 
+    if (headerHierarchyCount === 0) {
+        headerSuccessArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-valid">
+                <div class="ao-seo-tool-table-cell">
+                    <code>${htmlEscape('<h1> <h2> <h3> <h4> <h5> <h6>')}</code>
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    All header tags follow the correct hierarchy.
+                </div>
+            </div>`);
+    }
+
 
     // Image validation
     for (i = 0; i < domImages.length; i++) {
@@ -185,17 +231,16 @@
         if(image.alt) {
             imageAltCount++;
         } else {
-            imageErrorsArray.push(`<div class="ao-seo-tool-table-row ao-seo-tool-invalid">
+            imageErrorsArray.push(`
+                <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                     <div class="ao-seo-tool-table-cell" style="width: 100px;">
-                        <img src="${image.src}">
-                    </div>
-                    <div class="ao-seo-tool-table-cell">
-                        No alt attribute has been used on this image.
-                    </div>
-                    <div class="ao-seo-tool-table-cell">
                         <code>
                             ${htmlEscape(image.outerHTML)}
                         </code>
+                        <img src="${image.src}" />
+                    </div>
+                    <div class="ao-seo-tool-table-cell">
+                        No alt attribute has been used on this image.
                     </div>
                 </div>`);
 
@@ -203,13 +248,25 @@
         }
     }
 
+    if (imageAltCount === 0) {
+        imageSuccessArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-valid">
+                <div class="ao-seo-tool-table-cell" style="width: 100px;">
+                    Image <code>alt=""</code> attributes
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    All images have alt tags present.
+                </div>
+            </div>`);
+    }
+
 
 
 	// strings
 
     // var elmTitle = '<p class="seo-title">ao-seo-tool</h1>';
-    // var domTitleString = '<p class="' + validateTitle + '">Title length: ' + domTitle + '</p>';
-    // var domDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domDesc + '</p>';
+    // var domMetaTitleString = '<p class="' + validateTitle + '">Title length: ' + domMetaTitle.length + '</p>';
+    // var domMetaDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domMetaDesc + '</p>';
     // var domImagesStrings = '<p style="display: inline" class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + imageAltCount + ' </p>' + moreInfoBtn + showMeBtn + altDropDown;
     // var domH1String = '<p class="' + validateH1 + '">H1 count: ' + domH1s.length + ' </p>';
 
@@ -221,7 +278,7 @@
     //
 	// // format the entry of all strings
     //
-	// div.innerHTML = styleRef + elmTitle + domH1String + domHeaderString + domImagesStrings + domDescString + domTitleString;
+	// div.innerHTML = styleRef + elmTitle + domH1String + domHeaderString + domImagesStrings + domMetaDescString + domMetaTitleString;
     //
 	// document.body.insertBefore(div, document.body.firstChild);
 
@@ -248,6 +305,10 @@
     //     });
     // }
 
+
+    var totalErrors = metaErrorsArray.length + headerErrorsArray.length + imageErrorsArray.length;
+    var numOfErrorsText = `${totalErrors} ${totalErrors > 1 ? 'errors' : 'error'} found`;
+
     var aoSeoToolMarkup = `
     <link href="http://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
     <div class="ao-seo-tool">
@@ -255,7 +316,7 @@
             <div class="ao-seo-tool-navigation">
                 <div class="ao-seo-tool-title">SEO Tool</div>
                 <div class="ao-seo-tool-tabs">
-                    <div class="ao-seo-tool-tab ${metaErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
+                    <div class="ao-seo-tool-tab ao-seo-tool-active ${metaErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
                     <div class="ao-seo-tool-tab ${headerErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-headings">Headings</div>
                     <div class="ao-seo-tool-tab ${imageErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-images">Images</div>
                 </div>
@@ -263,27 +324,24 @@
             <div class="ao-seo-tool-tab-dashboard">
                 <div class="ao-seo-tool-tab-dashboard-header">
                     <div class="ao-seo-tool-tab-dashboard-header-summary">
-                        3 errors found
+                        ${numOfErrorsText}
                     </div>
                     <div class="ao-seo-tool-tab-dashboard-header-buttons">
                         <div class="ao-seo-tool-close">&times; Close</div>
                     </div>
                 </div>
                 <div class="ao-seo-tool-tab-dashboard-content">
-                    <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content">
+                    <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content ao-seo-tool-active">
                     
                         <div class="ao-seo-tool-toggle-errors ao-seo-tool-link">Highlight errors on the page</div>
                     
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Item
                                 </div>
-                                <div class="ao-seo-tool-table-head" style="width: 40%">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Details
-                                </div>
-                                <div class="ao-seo-tool-table-head">
-                                    Markup
                                 </div>
                             </div>
                             ${metaErrorsArray.join("")}
@@ -297,14 +355,11 @@
     
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Item
                                 </div>
-                                <div class="ao-seo-tool-table-head" style="width: 40%">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Details
-                                </div>
-                                <div class="ao-seo-tool-table-head">
-                                    Markup
                                 </div>
                             </div>
                             ${headerErrorsArray.join("")}
@@ -318,14 +373,11 @@
     
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Item
                                 </div>
-                                <div class="ao-seo-tool-table-head" style="width: 40%">
+                                <div class="ao-seo-tool-table-head" style="width: 50%">
                                     Details
-                                </div>
-                                <div class="ao-seo-tool-table-head">
-                                    Markup
                                 </div>
                             </div>
                             ${imageErrorsArray.join("")}

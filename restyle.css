@@ -14,7 +14,7 @@
 }
 
 .ao-seo-tool-container::before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
@@ -113,12 +113,12 @@
 }
 
 .ao-seo-tool-tab.ao-seo-tool-valid::before {
-    content: '\2714';
+    content: "\2714";
     color: #4CAF50;
 }
 
 .ao-seo-tool-tab.ao-seo-tool-invalid::before {
-    content: '\274C';
+    content: "\274C";
     font-size: 11px;
     color: #9e0000;
 }
@@ -127,7 +127,7 @@
     position: absolute;
     top: 50%;
     right: -1px;
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     margin-top: -8px;
@@ -148,7 +148,7 @@
     display: table;
     width: 100%;
     margin: 20px 0;
-    border-top: 1px solid #ddd;
+    border: 1px solid #ddd;
     font-size: 14px;
 }
 
@@ -157,30 +157,43 @@
 }
 
 .ao-seo-tool-table-row.ao-seo-tool-invalid {
-    background: #ffe3df;
+    background: #ffecea;
 }
+/*.ao-seo-tool-table-row.ao-seo-tool-invalid .ao-seo-tool-table-cell:first-of-type::before {*/
+    /*content: "\274C";*/
+/*}*/
+
+.ao-seo-tool-table-row.ao-seo-tool-warning {
+    background: #fffdd9;
+}
+/*.ao-seo-tool-table-row.ao-seo-tool-warning .ao-seo-tool-table-cell:first-of-type::before {*/
+    /*content: "\26A0";*/
+/*}*/
 
 .ao-seo-tool-table-row.ao-seo-tool-valid {
-    background: #e4ffdb;
+    background: #efffe6;
 }
+/*.ao-seo-tool-table-row.ao-seo-tool-valid .ao-seo-tool-table-cell:first-of-type::before {*/
+    /*content: "\2714";*/
+/*}*/
 
 .ao-seo-tool-table-cell,
 .ao-seo-tool-table-head {
     display: table-cell;
     vertical-align: middle;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
 }
 
 .ao-seo-tool-table-cell {
     word-wrap: break-word;
+    border-top: 1px solid #ddd;
 }
 
 .ao-seo-tool-table-cell img {
     display: block;
     max-width: 100px;
     max-height: 100px;
-    margin: auto;
+    margin: 10px 0 0 0;
 }
 
 .ao-seo-tool-table-head {
