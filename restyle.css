@@ -40,25 +40,28 @@
 
 .ao-seo-tool-tab-dashboard-header {
     display: table;
-    padding: 20px;
+    width: 100%;
     background: #f1f1f1;
     border-bottom: 1px solid #e6e6e6;
 }
 
 .ao-seo-tool-tab-dashboard-header-summary {
     display: table-cell;
-    width: 100%;
+    width: 50%;
+    padding: 20px;
     vertical-align: middle;
     font-weight: bold;
 }
 
 .ao-seo-tool-tab-dashboard-header-buttons {
     display: table-cell;
+    width: 50%;
+    padding: 20px;
     vertical-align: middle;
     text-align: right;
 }
 
-.ao-seo-tool-close {
+.ao-seo-tool-button {
     display: inline-block;
     padding: 10px 12px;
     background: #ddd;
@@ -72,9 +75,21 @@
     white-space: nowrap;
 }
 
-.ao-seo-tool-close:hover {
+.ao-seo-tool-button:hover,
+.ao-seo-tool-button.ao-seo-tool-active {
     background: #ccc;
 }
+
+.ao-seo-tool-button.ao-seo-tool-button-red {
+    background: #9e0000;
+    color: #fff;
+}
+
+.ao-seo-tool-button.ao-seo-tool-button-red:hover,
+.ao-seo-tool-button.ao-seo-tool-button-red.ao-seo-tool-active {
+    background: #8c0000;
+}
+
 
 .ao-seo-tool-tab-dashboard-content {
     position: relative;
@@ -189,6 +204,13 @@
     border-top: 1px solid #ddd;
 }
 
+.ao-seo-tool-table-cell:first-of-type code {
+    border: 1px solid #ddd;
+    display: block;
+    padding: 3px;
+    background: #fff;
+}
+
 .ao-seo-tool-table-cell img {
     display: block;
     max-width: 100px;
@@ -211,6 +233,15 @@
     text-decoration: none;
 }
 
-.ao-seo-tool-image-error {
+.ao-seo-tool-error-highlight {
     border: 3px solid #ff0000;
+}
+
+.ao-seo-tool-toggle-errors::before {
+    content: "\2610";
+    margin-right: 5px;
+}
+
+.ao-seo-tool-toggle-errors.ao-seo-tool-active::before {
+    content: "\2611";
 }

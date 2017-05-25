@@ -6,13 +6,14 @@
     }
 
 	// dom selectors
-
 	var domMetaTitle = document.title;
 	var domMetaDesc = document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]') : '';
     var domImages = document.getElementsByTagName('img');
     var domH1s = document.querySelectorAll('h1');
     var imageAltCount = 0;
+    var imagesWithoutAlt = [];
     var headerHierarchyCount = 0;
+    var headersWithWrongHierarchy = [];
 
     var metaErrorsArray = [];
     var imageErrorsArray = [];
@@ -22,22 +23,10 @@
     var imageSuccessArray = [];
     var headerSuccessArray = [];
 
-    // validation
-
-    // var validateTitle = domMetaTitle.length >= 55 && domMetaTitle.length <= 60 ? 'valid-seo' : 'invalid-seo';
-    // var validateImages = domImages.length === imageAltCount ? 'valid-seo' : 'invalid-seo';
-    // var validateDesc = domMetaDesc <= 160 ? 'valid-seo' : 'invalid-seo';
-    // var validateH1 = domH1s.length === 1 ? 'valid-seo' : 'invalid-seo';
-    // var altDropDown = imageErrorsArray ? '<div class="more-info">' + '<ul class="hide">' + imageErrorsArray.join('') + '</ul></div>' : '';
-    // var moreInfoBtn = imageErrorsArray.length ? '<span class="more-info-button"> more info...</span>' : '';
-    // var showMeBtn = imageErrorsArray.length ? '<span class="show-me-button"> show me...</span>' : '';
-
 
     // Meta title validation
-    console.log(domMetaTitle);
     if (domMetaTitle.length >= 55 && domMetaTitle.length <= 60) {
         // valid
-        console.log(domMetaTitle);
         metaSuccessArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-valid">
                 <div class="ao-seo-tool-table-cell">
@@ -122,16 +111,13 @@
 
         var h1tags = [];
         for (i = 0; i < domH1s.length; i++) {
-            console.log(h1tags);
             h1tags.push(`<code>${htmlEscape(domH1s[i].outerHTML)}</code>`);
         }
-
-        console.log(h1tags);
 
         headerErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                 <div class="ao-seo-tool-table-cell">
-                    ${h1tags.join("<br><br>")}
+                    ${h1tags.join("<br>")}
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     ${domH1s.length} <code>&lt;h1&gt;</code> tags have been found. There should only be <b>one</b> <code>&lt;h1&gt;</code> tag per page.
@@ -206,7 +192,7 @@
             sheet.insertRule('h' + item.headerSize + ' { border: 5px solid red; }', 0);
 
         } else if (item.headerSize > 1) {
-            console.log('H' + item.headerSize + ' count: ' + item.count);
+            // console.log('H' + item.headerSize + ' count: ' + item.count);
         }
     });
 
@@ -244,7 +230,8 @@
                     </div>
                 </div>`);
 
-            image.classList.add('ao-seo-tool-image-error');
+            imagesWithoutAlt.push(image);
+            // image.classList.add('ao-seo-tool-error-highlight');
         }
     }
 
@@ -263,24 +250,6 @@
 
 
 	// strings
-
-    // var elmTitle = '<p class="seo-title">ao-seo-tool</h1>';
-    // var domMetaTitleString = '<p class="' + validateTitle + '">Title length: ' + domMetaTitle.length + '</p>';
-    // var domMetaDescString = '<p class="' + validateDesc + '">Meta desc length: ' + domMetaDesc + '</p>';
-    // var domImagesStrings = '<p style="display: inline" class="' + validateImages + '">Image count: ' + domImages.length + ', with alt: ' + imageAltCount + ' </p>' + moreInfoBtn + showMeBtn + altDropDown;
-    // var domH1String = '<p class="' + validateH1 + '">H1 count: ' + domH1s.length + ' </p>';
-
-	// entry & styling
-
-	// var div = document.createElement('div');
-	// var styleRef = '<link href="https://media.ao.com/uk/hackday/seo-tool/styles.css" rel="stylesheet" type="text/css">';
-	// div.classList.add('ao-seo-tool-container');
-    //
-	// // format the entry of all strings
-    //
-	// div.innerHTML = styleRef + elmTitle + domH1String + domHeaderString + domImagesStrings + domMetaDescString + domMetaTitleString;
-    //
-	// document.body.insertBefore(div, document.body.firstChild);
 
 	// event listeners
 
@@ -307,7 +276,7 @@
 
 
     var totalErrors = metaErrorsArray.length + headerErrorsArray.length + imageErrorsArray.length;
-    var numOfErrorsText = `${totalErrors} ${totalErrors > 1 ? 'errors' : 'error'} found`;
+    var numOfErrorsText = `${totalErrors} ${totalErrors !== 1 ? 'errors' : 'error'} found`;
 
     var aoSeoToolMarkup = `
     <link href="http://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
@@ -327,14 +296,12 @@
                         ${numOfErrorsText}
                     </div>
                     <div class="ao-seo-tool-tab-dashboard-header-buttons">
-                        <div class="ao-seo-tool-close">&times; Close</div>
+                        <div class="ao-seo-tool-toggle-errors ao-seo-tool-button">Show Errors?</div>
+                        <div class="ao-seo-tool-close ao-seo-tool-button ao-seo-tool-button-red">&times; Close</div>
                     </div>
                 </div>
                 <div class="ao-seo-tool-tab-dashboard-content">
                     <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content ao-seo-tool-active">
-                    
-                        <div class="ao-seo-tool-toggle-errors ao-seo-tool-link">Highlight errors on the page</div>
-                    
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
                                 <div class="ao-seo-tool-table-head" style="width: 50%">
@@ -349,10 +316,7 @@
                         </div>
                     </div>
                     
-                    <div id="ao-seo-tool-headings" class="ao-seo-tool-tab-content">
-    
-                        <div class="ao-seo-tool-toggle-errors ao-seo-tool-link">Highlight errors on the page</div>
-    
+                    <div id="ao-seo-tool-headings" class="ao-seo-tool-tab-content">    
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
                                 <div class="ao-seo-tool-table-head" style="width: 50%">
@@ -368,9 +332,6 @@
                     </div>
                     
                     <div id="ao-seo-tool-images" class="ao-seo-tool-tab-content">
-    
-                        <div class="ao-seo-tool-toggle-errors ao-seo-tool-link">Highlight errors on the page</div>
-    
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
                                 <div class="ao-seo-tool-table-head" style="width: 50%">
@@ -401,6 +362,27 @@
     closeBtn.addEventListener('click', function(){
         document.querySelector('.ao-seo-tool').outerHTML='';
     });
+
+    var toggleErrorsBtn = document.querySelector('body .ao-seo-tool-toggle-errors');
+    toggleErrorsBtn.addEventListener('click', highlightErrors, false);
+
+    function highlightErrors(e) {
+
+        var elm = e.target;
+        var highlightedElements = document.querySelectorAll('body .ao-seo-tool-error-highlight');
+
+        highlightedElements.forEach(function (highlightedElm) {
+            highlightedElm.classList.remove('ao-seo-tool-error-highlight');
+        });
+
+        if (!elm.classList.contains('ao-seo-tool-active')) {
+            imagesWithoutAlt.forEach(function (image) {
+                image.classList.add('ao-seo-tool-error-highlight');
+            });
+        }
+
+        elm.classList.toggle('ao-seo-tool-active');
+    }
 
     var navTabs = document.querySelectorAll('body .ao-seo-tool-tab');
     var tabContents = document.querySelectorAll('.ao-seo-tool-tab-content');
