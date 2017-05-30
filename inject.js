@@ -279,7 +279,7 @@
     var numOfErrorsText = `${totalErrors} ${totalErrors !== 1 ? 'errors' : 'error'} found`;
 
     var aoSeoToolMarkup = `
-    <link href="http://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
+    <link href="https://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
     <div class="ao-seo-tool">
         <div class="ao-seo-tool-container">
             <div class="ao-seo-tool-navigation">
