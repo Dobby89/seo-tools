@@ -379,6 +379,15 @@
             imagesWithoutAlt.forEach(function (image) {
                 image.classList.add('ao-seo-tool-error-highlight');
             });
+
+            headerSizes.forEach(function (headerSize) {
+                if (!headerSize.isValid) {
+                    var invalidHeaders = document.querySelectorAll(`h${headerSize.headerSize}`);
+                    invalidHeaders.forEach(function (header) {
+                        header.classList.add('ao-seo-tool-error-highlight');
+                    });
+                }
+            });
         }
 
         elm.classList.toggle('ao-seo-tool-active');
