@@ -202,6 +202,7 @@
 .ao-seo-tool-table-cell {
     word-wrap: break-word;
     border-top: 1px solid #ddd;
+    vertical-align: top;
 }
 
 .ao-seo-tool-table-cell:first-of-type code {

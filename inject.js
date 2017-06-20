@@ -140,8 +140,6 @@
     var headerSizes = headerSizeRange.map(function(size) {
         var foundHeaders = document.querySelectorAll('h' + size) || [];
 
-        console.log(foundHeaders);
-
         var foundHeaderContent = Array.from(foundHeaders).map(function (header) {
             return header.textContent;
         });
@@ -175,21 +173,24 @@
 
             headerHierarchyCount++;
 
+            var headers = document.querySelectorAll(`h${item.headerSize}`);
+            var headerCode = [];
+
+            headers.forEach(function (header) {
+                headerCode.push(`<code>${htmlEscape(header.outerHTML)}</code>`);
+            });
+
             headerErrorsArray.push(`
                 <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                     <div class="ao-seo-tool-table-cell">
-                        <code>&lt;h${item.headerSize}&gt;</code> tag
+                        ${headerCode.join("<br>")}
                     </div>
                     <div class="ao-seo-tool-table-cell">
-                        <code>&lt;h${item.headerSize}&gt;</code> tag has been used but no h${index} has been found.
+                        ${headerCode.length} <code>&lt;h${item.headerSize}&gt;</code> ${headerCode.length > 1 ? 'tags have' : 'tag has'} been used but no <code>&lt;h${index}&gt;</code> tag has been found.
                     </div>
                 </div>`);
 
-            // Create a style element and add styles to highlights issues
-            var style = document.createElement("style");
-            document.head.appendChild(style);
-            sheet = style.sheet;
-            sheet.insertRule('h' + item.headerSize + ' { border: 5px solid red; }', 0);
+            // ao-seo-tool-error-highlight
 
         } else if (item.headerSize > 1) {
             // console.log('H' + item.headerSize + ' count: ' + item.count);
@@ -231,7 +232,6 @@
                 </div>`);
 
             imagesWithoutAlt.push(image);
-            // image.classList.add('ao-seo-tool-error-highlight');
         }
     }
 
