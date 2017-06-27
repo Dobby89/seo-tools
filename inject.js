@@ -25,18 +25,7 @@
 
 
     // Meta title validation
-    if (domMetaTitle.length >= 55 && domMetaTitle.length <= 60) {
-        // valid
-        metaSuccessArray.push(`
-            <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-                <div class="ao-seo-tool-table-cell">
-                    <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
-                </div>
-                <div class="ao-seo-tool-table-cell">
-                    The <code>&lt;title&gt;</code> tag is present and is between <b>55</b> and <b>60</b> characters.
-                </div>
-            </div>`);
-    } else if (domMetaTitle.length === 0 ) {
+    if (!domMetaTitle) {
         // invalid
         metaErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
@@ -45,6 +34,17 @@
                 </div>
                 <div class="ao-seo-tool-table-cell">
                     The <code>&lt;title&gt;</code> tag has not been found. <b>Every</b> page must contain a <code>&lt;title&gt;</code> tag, which is between <b>55</b> and <b>60</b> characters
+                </div>
+            </div>`);
+    } else if (domMetaTitle.length >= 55 && domMetaTitle.length <= 60) {
+        // valid
+        metaSuccessArray.push(`
+            <div class="ao-seo-tool-table-row ao-seo-tool-valid">
+                <div class="ao-seo-tool-table-cell">
+                    <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
+                </div>
+                <div class="ao-seo-tool-table-cell">
+                    The <code>&lt;title&gt;</code> tag is present and is between <b>55</b> and <b>60</b> characters.
                 </div>
             </div>`);
     } else {
