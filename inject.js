@@ -62,7 +62,7 @@
 
 
     // Meta description validation
-    if (domMetaDesc.content.length === 0) {
+    if (!domMetaDesc) {
         metaErrorsArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
                 <div class="ao-seo-tool-table-cell">
@@ -426,10 +426,6 @@
 
 
     }
-
-	// check it actually works!
-
-	console.warn('injected into self, giggity.');
 
     function htmlEscape(str) {
         return str
