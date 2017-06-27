@@ -388,6 +388,13 @@
                     });
                 }
             });
+
+            if (domH1s.length > 1) {
+                domH1s.forEach(function (h1) {
+                    console.log(h1);
+                    h1.classList.add('ao-seo-tool-error-highlight');
+                })
+            }
         }
 
         elm.classList.toggle('ao-seo-tool-active');
