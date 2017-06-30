@@ -36,7 +36,7 @@
                     The <code>&lt;title&gt;</code> tag has not been found. <b>Every</b> page must contain a <code>&lt;title&gt;</code> tag, which is between <b>55</b> and <b>60</b> characters
                 </div>
             </div>`);
-    } else if (domMetaTitle.length >= 55 && domMetaTitle.length <= 60) {
+    } else if (domMetaTitle.length >= 40 && domMetaTitle.length <= 60) {
         // valid
         metaSuccessArray.push(`
             <div class="ao-seo-tool-table-row ao-seo-tool-valid">
@@ -44,7 +44,7 @@
                     <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The <code>&lt;title&gt;</code> tag is present and is between <b>55</b> and <b>60</b> characters.
+                    The <code>&lt;title&gt;</code> tag is present and is between <b>40</b> and <b>60</b> characters.
                 </div>
             </div>`);
     } else {
@@ -55,7 +55,7 @@
                     <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The <code>&lt;title&gt;</code> tag should be between <b>55</b> and <b>60</b> characters.
+                    The <code>&lt;title&gt;</code> tag should be between <b>40</b> and <b>60</b> characters.
                 </div>
             </div>`);
     }
@@ -90,7 +90,7 @@
                     <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The Meta Description is present and is <= <b>160</b> characters.
+                    The Meta Description is present and is <b><= 160</b> characters.
                 </div>
             </div>`);
     }
