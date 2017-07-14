@@ -44,7 +44,7 @@
                     <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The <code>&lt;title&gt;</code> tag is present and is between <b>40</b> and <b>60</b> characters.
+                    The <code>&lt;title&gt;</code> is <b>${domMetaTitle.length}</b> characters, which is between the recommended <b>40</b> and <b>60</b> characters.
                 </div>
             </div>`);
     } else {
@@ -55,7 +55,7 @@
                     <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The <code>&lt;title&gt;</code> tag should be between <b>40</b> and <b>60</b> characters.
+                    The <code>&lt;title&gt;</code> tag is <b>${domMetaTitle.length}</b> characters, but should be between <b>40</b> and <b>60</b> characters.
                 </div>
             </div>`);
     }
@@ -79,7 +79,7 @@
                     <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The Meta Description is more than <b>160</b> characters.
+                    The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is more than the recommended <b>160</b> characters.
                 </div>
             </div>`);
     } else {
@@ -90,7 +90,7 @@
                     <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
                 </div>
                 <div class="ao-seo-tool-table-cell">
-                    The Meta Description is present and is <b><= 160</b> characters.
+                    The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is within the recommended <b>160</b> character limit.
                 </div>
             </div>`);
     }
