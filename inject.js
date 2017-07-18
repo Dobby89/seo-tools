@@ -210,16 +210,14 @@
         });
     }
 
-    const totalErrors = validationMessages.foreach((messageType) => {
-        messageType
-    });
+    const totalErrors = countTotalErrors();
     const errorsSummaryText = `${totalErrors.length} ${totalErrors.length !== 1 ? 'errors' : 'error'} found`; // pluralise if required
 
-    function getValidationMessagesByCategory(messages, category) {
-        return messages.filter((message) => message.category == category);
-    }
+    const totalMetaDataErrors = validationMessages.metaData.errorArray.length + validationMessages.metaData.warningArray.length;
+    const totalHeadingsErrors = validationMessages.headings.errorArray.length + validationMessages.headings.warningArray.length;
+    const totalImagesErrors = validationMessages.images.errorArray.length + validationMessages.images.warningArray.length;
 
-    let tabContentMarkup = null;
+    let tabContentMarkup = createTabContentMarkup();
 
     var aoSeoToolMarkup = `
     <link href="https://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
@@ -228,9 +226,9 @@
             <div class="ao-seo-tool-navigation">
                 <div class="ao-seo-tool-title">SEO Tool</div>
                 <div class="ao-seo-tool-tabs">
-                    <div class="ao-seo-tool-tab ${metaValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
-                    <div class="ao-seo-tool-tab ${headingValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-headings">Headings</div>
-                    <div class="ao-seo-tool-tab ${imageValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-images">Images</div>
+                    <div class="ao-seo-tool-tab ${totalMetaDataErrors ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
+                    <div class="ao-seo-tool-tab ${totalHeadingsErrors ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-headings">Headings</div>
+                    <div class="ao-seo-tool-tab ${totalImagesErrors ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-images">Images</div>
                 </div>
             </div>
             <div class="ao-seo-tool-tab-dashboard">
@@ -244,53 +242,7 @@
                     </div>
                 </div>
                 <div class="ao-seo-tool-tab-dashboard-content">
-                
                     ${tabContentMarkup}
-                
-                    <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content">
-                        <div class="ao-seo-tool-table">
-                            <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Item
-                                </div>
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Details
-                                </div>
-                            </div>
-                            ${metaErrorsArray.join("")}
-                            ${metaSuccessArray.join("")}
-                        </div>
-                    </div>
-                    
-                    <div id="ao-seo-tool-headings" class="ao-seo-tool-tab-content">    
-                        <div class="ao-seo-tool-table">
-                            <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Item
-                                </div>
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Details
-                                </div>
-                            </div>
-                            ${headerErrorsArray.join("")}
-                            ${headerSuccessArray.join("")}
-                        </div>
-                    </div>
-                    
-                    <div id="ao-seo-tool-images" class="ao-seo-tool-tab-content">
-                        <div class="ao-seo-tool-table">
-                            <div class="ao-seo-tool-table-row">
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Item
-                                </div>
-                                <div class="ao-seo-tool-table-head" style="width: 50%">
-                                    Details
-                                </div>
-                            </div>
-                            ${imageErrorsArray.join("")}
-                            ${imageSuccessArray.join("")}
-                        </div>
-                    </div>
                 </div>
             </div>
             <div style="clear: both;"></div>
@@ -337,7 +289,6 @@
 
             if (domH1s.length > 1) {
                 domH1s.forEach(function (h1) {
-                    console.log(h1);
                     h1.classList.add('ao-seo-tool-error-highlight');
                 })
             }
@@ -347,13 +298,17 @@
     }
 
     var navTabs = document.querySelectorAll('body .ao-seo-tool-tab');
-    navTabs[0].classList.add('ao-seo-tool-active'); // make the first tab active
-    navTabs.forEach((item, index) => {
-        item.addEventListener('click', tabClicked, false);
-    });
+    if (navTabs.length) {
+        navTabs[0].classList.add('ao-seo-tool-active'); // make the first tab active
+        navTabs.forEach((item) => {
+            item.addEventListener('click', tabClicked, false);
+        });
+    }
 
     var tabContents = document.querySelectorAll('.ao-seo-tool-tab-content');
-    tabContents[0].classList.add('ao-seo-tool-active'); // make the first tab active
+    if (tabContents.length) {
+        tabContents[0].classList.add('ao-seo-tool-active'); // make the first tab active
+    }
 
     function tabClicked(e) {
         var elm = e.target;
@@ -389,6 +344,75 @@
             .replace(/'/g, '&#39;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
+    }
+
+    function countTotalErrors() {
+        let errorCount = 0;
+
+        for(let key in validationMessages) {
+
+            const messageType = validationMessages[key];
+
+            errorCount += messageType.errorArray.length;
+            errorCount += messageType.warningArray.length;
+        };
+
+        return errorCount;
+    }
+
+    function createTabContentMarkup() {
+        let markup = '';
+
+        for (let key in validationMessages) {
+
+            const messageType = validationMessages[key];
+
+            let summaryMarkup = '';
+            messageType.errorArray.forEach((error) => {
+                summaryMarkup += createTabContentMessageSummaryMarkup(error, 'invalid');
+            });
+            messageType.warningArray.forEach((warning) => {
+                summaryMarkup += createTabContentMessageSummaryMarkup(warning, 'warning');
+            });
+            messageType.successArray.forEach((success) => {
+                summaryMarkup += createTabContentMessageSummaryMarkup(success, 'valid');
+            });
+
+            if (summaryMarkup.length) {
+                markup += `
+                <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content">
+                    <div class="ao-seo-tool-table">
+                        <div class="ao-seo-tool-table-row">
+                            <div class="ao-seo-tool-table-head" style="width: 50%">
+                                Item
+                            </div>
+                            <div class="ao-seo-tool-table-head" style="width: 50%">
+                                Details
+                            </div>
+                        </div>
+                        ${summaryMarkup}
+                    </div>
+                </div>
+                `;
+            }
+        }
+
+        return markup;
+    }
+
+    function createTabContentMessageSummaryMarkup(message, typeString) {
+        let markup = '';
+        markup += `
+        <div class="ao-seo-tool-table-row ao-seo-tool-${typeString}">
+            <div class="ao-seo-tool-table-cell">
+                ${message.snippet}
+            </div>
+            <div class="ao-seo-tool-table-cell">
+                ${message.message}
+            </div>
+        </div>`;
+
+        return markup;
     }
 
 })();
