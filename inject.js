@@ -10,26 +10,39 @@
 	var domMetaDesc = document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]') : '';
     var domImages = document.getElementsByTagName('img');
     var domH1s = document.querySelectorAll('h1');
-    var imageAltCount = 0;
+    var imagesWithAltCount = 0;
+    var headerHierarchyErrorCount = 0;
     var imagesWithoutAlt = [];
-    var headerHierarchyCount = 0;
-    var headersWithWrongHierarchy = [];
 
-    var metaErrorsArray = [];
-    var imageErrorsArray = [];
-    var headerErrorsArray = [];
+    let validationMessages = {
+        metaData: {
+            tabTitle: 'Meta Data',
+            errorArray: [],
+            warningArray: [],
+            successArray: []
+        },
+        headings: {
+            tabTitle: 'Headings',
+            errorArray: [],
+            warningArray: [],
+            successArray: []
+        },
+        images: {
+            tabTitle: 'Images',
+            errorArray: [],
+            warningArray: [],
+            successArray: []
+        }
+    };
 
-    var metaSuccessArray = [];
-    var imageSuccessArray = [];
-    var headerSuccessArray = [];
+    let metaErrors = [];
+    let imageErrors = [];
 
 
     // Meta title validation
     if (!domMetaTitle) {
-        // invalid
-        validationMessages.push({
-            isValid: false,
-            category: 'metaTitle',
+        // error
+        validationMessages.metaData.errorArray.push({
             snippet: `<code>${htmlEscape('<title></title>')}</code>`,
             message: `The <code>&lt;title&gt;</code> tag has not been found. <b>Every</b> page must contain a <code>&lt;title&gt;</code> tag, which is between <b>55</b> and <b>60</b> characters`
         });
@@ -44,121 +57,49 @@
         //         </div>
         //     </div>`);
     } else if (domMetaTitle.length >= 40 && domMetaTitle.length <= 60) {
-        // valid
-        validationMessages.push({
-            isValid: true,
-            category: 'metaTitle',
+        // success
+        validationMessages.metaData.successArray.push({
             snippet: `<code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>`,
             message: `The <code>&lt;title&gt;</code> is <b>${domMetaTitle.length}</b> characters, which is between the recommended <b>40</b> and <b>60</b> characters.`
         });
-
-        // metaSuccessArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             The <code>&lt;title&gt;</code> is <b>${domMetaTitle.length}</b> characters, which is between the recommended <b>40</b> and <b>60</b> characters.
-        //         </div>
-        //     </div>`);
     } else {
-        // invalid
-        validationMessages.push({
-            isValid: false,
-            category: 'metaTitle',
+        // warning
+        validationMessages.metaData.warningArray.push({
             snippet: `<code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>`,
             message: `The <code>&lt;title&gt;</code> tag is <b>${domMetaTitle.length}</b> characters, but should be between <b>40</b> and <b>60</b> characters.`
         });
-
-        // metaErrorsArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-warning">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape('<title>')}${domMetaTitle}${htmlEscape('</title>')}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             The <code>&lt;title&gt;</code> tag is <b>${domMetaTitle.length}</b> characters, but should be between <b>40</b> and <b>60</b> characters.
-        //         </div>
-        //     </div>`);
     }
 
 
     // Meta description validation
     if (!domMetaDesc) {
-        // invalid
-        validationMessages.push({
-            isValid: false,
-            category: 'meta-data',
+        // error
+        validationMessages.metaData.errorArray.push({
             snippet: `<code>${htmlEscape('<meta name="description" content="">')}</code>`,
             message: `No Meta Description has been found. <b>Every</b> page must contain a Meta Description.`
         });
-
-        // metaErrorsArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape('<meta name="description" content="">')}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             No Meta Description has been found. <b>Every</b> page must contain a Meta Description.
-        //         </div>
-        //     </div>`);
     } else if (domMetaDesc.content.length > 160) {
-        // invalid
-        validationMessages.push({
-            isValid: false,
-            category: 'meta-data',
+        // warning
+        validationMessages.metaData.warningArray.push({
             snippet: `<code>${htmlEscape(domMetaDesc.outerHTML)}</code>`,
             message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is more than the recommended <b>160</b> characters.`
         });
-
-        // metaErrorsArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is more than the recommended <b>160</b> characters.
-        //         </div>
-        //     </div>`);
     } else {
-        // valid
-        validationMessages.push({
-            isValid: false,
-            category: 'meta-data',
+        // success
+        validationMessages.metaData.successArray.push({
             snippet: `<code>${htmlEscape(domMetaDesc.outerHTML)}</code>`,
             message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is within the recommended <b>160</b> character limit.`
         });
-
-        // metaSuccessArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape(domMetaDesc.outerHTML)}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is within the recommended <b>160</b> character limit.
-        //         </div>
-        //     </div>`);
     }
 
 
     // H1 tag validation
     if (domH1s.length === 0) {
         // invalid
-        validationMessages.push({
-            isValid: false,
-            category: 'meta-data',
+        validationMessages.headings.errorArray.push({
             snippet: `<code>&lt;h1&gt;</code>`,
             message: `No <code>&lt;h1&gt;</code> tag has been found. <b>Every</b> page must contain a <code>&lt;h1&gt;</code> tag.`
         });
-
-        // headerErrorsArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>&lt;h1&gt;</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             No <code>&lt;h1&gt;</code> tag has been found. <b>Every</b> page must contain a <code>&lt;h1&gt;</code> tag.
-        //         </div>
-        //     </div>`);
     } else if (domH1s.length > 1) {
         // invalid
 
@@ -167,41 +108,16 @@
             h1tags.push(`<code>${htmlEscape(domH1s[i].outerHTML)}</code>`);
         }
 
-        validationMessages.push({
-            isValid: false,
-            category: 'headings',
+        validationMessages.headings.errorArray.push({
             snippet: `${h1tags.join("<br>")}`,
             message: `${domH1s.length} <code>&lt;h1&gt;</code> tags have been found. There should only be <b>one</b> <code>&lt;h1&gt;</code> tag per page.`
         });
-
-        // headerErrorsArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             ${h1tags.join("<br>")}
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             ${domH1s.length} <code>&lt;h1&gt;</code> tags have been found. There should only be <b>one</b> <code>&lt;h1&gt;</code> tag per page.
-        //         </div>
-        //     </div>`);
     } else {
         // valid
-
-        validationMessages.push({
-            isValid: true,
-            category: 'headings',
+        validationMessages.headings.successArray.push({
             snippet: `<code>${htmlEscape(domH1s[0].outerHTML)}</code>`,
             message: `<code>&lt;h1&gt;</code> tag exists and is the only one on the page.`
         });
-
-        // headerSuccessArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape(domH1s[0].outerHTML)}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>&lt;h1&gt;</code> tag exists and is the only one on the page.
-        //         </div>
-        //     </div>`);
     }
 
     // header tag hierarchy check
@@ -240,7 +156,7 @@
     headerSizes.reverse().forEach(function (item, index, list) {
         if (!item.isValid) {
 
-            headerHierarchyCount++;
+            headerHierarchyErrorCount++;
 
             var headers = document.querySelectorAll(`h${item.headerSize}`);
             var headerCode = [];
@@ -250,48 +166,20 @@
             });
 
             // invalid
-            validationMessages.push({
-                isValid: false,
-                category: 'headings',
+            validationMessages.headings.errorArray.push({
                 snippet: `${headerCode.join("<br>")}`,
                 message: `${headerCode.length} <code>&lt;h${item.headerSize}&gt;</code> ${headerCode.length > 1 ? 'tags have' : 'tag has'} been used but no <code>&lt;h${index}&gt;</code> tag has been found.`
             });
-
-            // headerErrorsArray.push(`
-            //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-            //         <div class="ao-seo-tool-table-cell">
-            //             ${headerCode.join("<br>")}
-            //         </div>
-            //         <div class="ao-seo-tool-table-cell">
-            //             ${headerCode.length} <code>&lt;h${item.headerSize}&gt;</code> ${headerCode.length > 1 ? 'tags have' : 'tag has'} been used but no <code>&lt;h${index}&gt;</code> tag has been found.
-            //         </div>
-            //     </div>`);
-
-            // ao-seo-tool-error-highlight
-
-        } else if (item.headerSize > 1) {
-            // console.log('H' + item.headerSize + ' count: ' + item.count);
         }
     });
 
-    if (headerHierarchyCount === 0) {
+    // No header hierarchy errors have been found, so log a success
+    if (headerHierarchyErrorCount === 0) {
         // valid
-        validationMessages.push({
-            isValid: true,
-            category: 'headings',
+        validationMessages.headings.successArray.push({
             snippet: `<code>${htmlEscape('<h1> <h2> <h3> <h4> <h5> <h6>')}</code>`,
             message: `All header tags follow the correct hierarchy.`
         });
-
-        // headerSuccessArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-        //         <div class="ao-seo-tool-table-cell">
-        //             <code>${htmlEscape('<h1> <h2> <h3> <h4> <h5> <h6>')}</code>
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             All header tags follow the correct hierarchy.
-        //         </div>
-        //     </div>`);
     }
 
 
@@ -301,55 +189,37 @@
         var image = domImages[i];
 
         if(image.alt) {
-            imageAltCount++;
+            imagesWithAltCount++;
         } else {
             // invalid
-            validationMessages.push({
-                isValid: false,
-                category: 'images',
-                snippet: `<code>${htmlEscape(image.outerHTML)}</code>
-                        <img src="${image.src}" />`,
+            validationMessages.images.errorArray.push({
+                snippet: `<code>${htmlEscape(image.outerHTML)}</code><img src="${image.src}" />`,
                 message: `No alt attribute has been used on this image.`
             });
 
-            // imageErrorsArray.push(`
-            //     <div class="ao-seo-tool-table-row ao-seo-tool-invalid">
-            //         <div class="ao-seo-tool-table-cell" style="width: 100px;">
-            //             <code>${htmlEscape(image.outerHTML)}</code>
-            //             <img src="${image.src}" />
-            //         </div>
-            //         <div class="ao-seo-tool-table-cell">
-            //             No alt attribute has been used on this image.
-            //         </div>
-            //     </div>`);
-
+            // Used later to visually highlight images without alt tags on the page
             imagesWithoutAlt.push(image);
         }
     }
 
-    if (imageAltCount === 0) {
+    if (imagesWithAltCount === 0) {
         // valid
-        validationMessages.push({
-            isValid: true,
-            category: 'images',
+        validationMessages.images.successArray.push({
             snippet: `Image <code>alt=""</code> attributes`,
             message: `All images have alt tags present.`
         });
-
-        // imageSuccessArray.push(`
-        //     <div class="ao-seo-tool-table-row ao-seo-tool-valid">
-        //         <div class="ao-seo-tool-table-cell" style="width: 100px;">
-        //             Image <code>alt=""</code> attributes
-        //         </div>
-        //         <div class="ao-seo-tool-table-cell">
-        //             All images have alt tags present.
-        //         </div>
-        //     </div>`);
     }
 
+    const totalErrors = validationMessages.foreach((messageType) => {
+        messageType
+    });
+    const errorsSummaryText = `${totalErrors.length} ${totalErrors.length !== 1 ? 'errors' : 'error'} found`; // pluralise if required
 
-    const totalErrors = countValidationErrors(validationMessages);
-    const numOfErrorsText = `${totalErrors} ${totalErrors !== 1 ? 'errors' : 'error'} found`;
+    function getValidationMessagesByCategory(messages, category) {
+        return messages.filter((message) => message.category == category);
+    }
+
+    let tabContentMarkup = null;
 
     var aoSeoToolMarkup = `
     <link href="https://media.ao.com/uk/hackday/seo-tool/restyle.css" rel="stylesheet" type="text/css">
@@ -358,15 +228,15 @@
             <div class="ao-seo-tool-navigation">
                 <div class="ao-seo-tool-title">SEO Tool</div>
                 <div class="ao-seo-tool-tabs">
-                    <div class="ao-seo-tool-tab ao-seo-tool-active ${metaErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
-                    <div class="ao-seo-tool-tab ${headerErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-headings">Headings</div>
-                    <div class="ao-seo-tool-tab ${imageErrorsArray.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-images">Images</div>
+                    <div class="ao-seo-tool-tab ${metaValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-meta-data">Meta Data</div>
+                    <div class="ao-seo-tool-tab ${headingValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-headings">Headings</div>
+                    <div class="ao-seo-tool-tab ${imageValidationErrors.length ? 'ao-seo-tool-invalid' : 'ao-seo-tool-valid'}" data-ao-seo-tool-tab-target="ao-seo-tool-images">Images</div>
                 </div>
             </div>
             <div class="ao-seo-tool-tab-dashboard">
                 <div class="ao-seo-tool-tab-dashboard-header">
                     <div class="ao-seo-tool-tab-dashboard-header-summary">
-                        ${numOfErrorsText}
+                        ${errorsSummaryText}
                     </div>
                     <div class="ao-seo-tool-tab-dashboard-header-buttons">
                         <div class="ao-seo-tool-toggle-errors ao-seo-tool-button">Show Errors?</div>
@@ -374,7 +244,10 @@
                     </div>
                 </div>
                 <div class="ao-seo-tool-tab-dashboard-content">
-                    <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content ao-seo-tool-active">
+                
+                    ${tabContentMarkup}
+                
+                    <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content">
                         <div class="ao-seo-tool-table">
                             <div class="ao-seo-tool-table-row">
                                 <div class="ao-seo-tool-table-head" style="width: 50%">
@@ -474,10 +347,13 @@
     }
 
     var navTabs = document.querySelectorAll('body .ao-seo-tool-tab');
-    var tabContents = document.querySelectorAll('.ao-seo-tool-tab-content');
-    navTabs.forEach(function (item) {
+    navTabs[0].classList.add('ao-seo-tool-active'); // make the first tab active
+    navTabs.forEach((item, index) => {
         item.addEventListener('click', tabClicked, false);
     });
+
+    var tabContents = document.querySelectorAll('.ao-seo-tool-tab-content');
+    tabContents[0].classList.add('ao-seo-tool-active'); // make the first tab active
 
     function tabClicked(e) {
         var elm = e.target;
@@ -513,12 +389,6 @@
             .replace(/'/g, '&#39;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
-    }
-
-    function countValidationErrors(validationArray) {
-        return validationArray.filter((message) => {
-            return !message.isValid;
-        }).length;
     }
 
 })();
