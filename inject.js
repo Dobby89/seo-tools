@@ -17,18 +17,21 @@
     let validationMessages = {
         metaData: {
             tabTitle: 'Meta Data',
+            tabClass: 'meta-data',
             errorArray: [],
             warningArray: [],
             successArray: []
         },
         headings: {
             tabTitle: 'Headings',
+            tabClass: 'headings',
             errorArray: [],
             warningArray: [],
             successArray: []
         },
         images: {
             tabTitle: 'Images',
+            tabClass: 'images',
             errorArray: [],
             warningArray: [],
             successArray: []
@@ -365,22 +368,22 @@
 
         for (let key in validationMessages) {
 
-            const messageType = validationMessages[key];
+            const messageCategory = validationMessages[key];
 
             let summaryMarkup = '';
-            messageType.errorArray.forEach((error) => {
+            messageCategory.errorArray.forEach((error) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(error, 'invalid');
             });
-            messageType.warningArray.forEach((warning) => {
+            messageCategory.warningArray.forEach((warning) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(warning, 'warning');
             });
-            messageType.successArray.forEach((success) => {
+            messageCategory.successArray.forEach((success) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(success, 'valid');
             });
 
             if (summaryMarkup.length) {
                 markup += `
-                <div id="ao-seo-tool-meta-data" class="ao-seo-tool-tab-content">
+                <div id="ao-seo-tool-${messageCategory.tabClass}" class="ao-seo-tool-tab-content">
                     <div class="ao-seo-tool-table">
                         <div class="ao-seo-tool-table-row">
                             <div class="ao-seo-tool-table-head" style="width: 50%">
