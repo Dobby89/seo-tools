@@ -13,6 +13,7 @@
     var imagesWithAltCount = 0;
     var headerHierarchyErrorCount = 0;
     var imagesWithoutAlt = [];
+    const headerSizeRange = [1,2,3,4,5,6];
 
     let validationMessages = {
         metaData: {
@@ -124,8 +125,7 @@
     }
 
     // header tag hierarchy check
-    var headerSizeRange = [1,2,3,4,5,6];
-    var headerSizes = headerSizeRange.map(function(size) {
+    let headerSizes = headerSizeRange.map(function(size) {
         var foundHeaders = document.querySelectorAll('h' + size) || [];
 
         var foundHeaderContent = Array.from(foundHeaders).map(function (header) {
@@ -213,8 +213,8 @@
         });
     }
 
-    const totalErrors = countTotalErrors();
-    const errorsSummaryText = `${totalErrors.length} ${totalErrors.length !== 1 ? 'errors' : 'error'} found`; // pluralise if required
+    const totalErrors = countValidationMessagesByType(['errorArray', 'warningArray']);
+    const errorsSummaryText = `${totalErrors} ${totalErrors !== 1 ? 'errors' : 'error'} found`; // pluralise if required
 
     const totalMetaDataErrors = validationMessages.metaData.errorArray.length + validationMessages.metaData.warningArray.length;
     const totalHeadingsErrors = validationMessages.headings.errorArray.length + validationMessages.headings.warningArray.length;
@@ -331,15 +331,6 @@
         elm.classList.add('ao-seo-tool-active');
     }
 
-    var toggleErrorLinks = document.querySelectorAll('.ao-seo-tool-toggle-errors');
-    toggleErrorLinks.forEach(function (item) {
-        item.addEventListener('click', toggleErrors, false);
-    });
-
-    function toggleErrors(e) {
-        var elm = e.target;
-    }
-
     function htmlEscape(str) {
         return str
             .replace(/&/g, '&amp;')
@@ -349,18 +340,30 @@
             .replace(/>/g, '&gt;');
     }
 
-    function countTotalErrors() {
-        let errorCount = 0;
+    /**
+     * countValidationMessagesByType
+     *
+     * Returns the amount of messages by type, e.g. error, warning, success
+     *
+     * @param messageArrayType
+     * @returns {number}
+     */
+    function countValidationMessagesByType(messageTypes = []) {
+        if (typeof messageTypes === 'object' && messageTypes.length) {
+            let count = 0;
+            for(let key in validationMessages) {
+                const validationCategory = validationMessages[key];
+                Array.from(messageTypes).forEach((type) => {
+                    count += validationCategory[type].length;
+                });
+            }
+            return count;
+        }
+    }
 
-        for(let key in validationMessages) {
 
-            const messageType = validationMessages[key];
-
-            errorCount += messageType.errorArray.length;
-            errorCount += messageType.warningArray.length;
-        };
-
-        return errorCount;
+    function countValidationMessagesByCategory() {
+        // TODO
     }
 
     function createTabContentMarkup() {
@@ -368,22 +371,22 @@
 
         for (let key in validationMessages) {
 
-            const messageCategory = validationMessages[key];
+            const validationCategory = validationMessages[key];
 
             let summaryMarkup = '';
-            messageCategory.errorArray.forEach((error) => {
+            validationCategory.errorArray.forEach((error) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(error, 'invalid');
             });
-            messageCategory.warningArray.forEach((warning) => {
+            validationCategory.warningArray.forEach((warning) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(warning, 'warning');
             });
-            messageCategory.successArray.forEach((success) => {
+            validationCategory.successArray.forEach((success) => {
                 summaryMarkup += createTabContentMessageSummaryMarkup(success, 'valid');
             });
 
             if (summaryMarkup.length) {
                 markup += `
-                <div id="ao-seo-tool-${messageCategory.tabClass}" class="ao-seo-tool-tab-content">
+                <div id="ao-seo-tool-${validationCategory.tabClass}" class="ao-seo-tool-tab-content">
                     <div class="ao-seo-tool-table">
                         <div class="ao-seo-tool-table-row">
                             <div class="ao-seo-tool-table-head" style="width: 50%">
