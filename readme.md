@@ -13,7 +13,7 @@ A simple Google Chrome extension which validates the HTML markup against the fol
 
 ## Screenshot
 
-![SEO Tool example](https://content.screencast.com/users/RobinAO/folders/Jing/media/5005c319-2618-4f60-9bf8-37ab6b7ca35f/2018-03-13_0841.png "SEO Tool example")
+![SEO Tool example](https://content.screencast.com/users/RobinAO/folders/Jing/media/c2ca5d21-3cf4-4f18-b9e7-2df51549ba51/2018-03-13_0908.png "SEO Tool example")
 
 ## Set up
 
