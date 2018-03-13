@@ -1,21 +1,23 @@
-# Spec
+# SEO Tool
 
-* As a UAT Analyst, I want a standalone tool that I can enter a URL into that will then run a series of tests against that page.
-* The tool should be able to be run against our live websites, as well as all testing environments (canary, beta, staging).
-* Things that the tool will check are:
-⋅⋅1. The title tag is between 55-60 characters in length
-⋅⋅2. The meta description is below 160 characters
-⋅⋅3. There is only one H1 tag on the page
-⋅⋅4. Headers follow a consistent structure (H1,H2,H3)
-⋅⋅5. All images have img alt text
-⋅⋅6. All images have Image Title
+A simple Google Chrome extension which validates the HTML markup against the following conditions:
 
-# Styles
+* The `title` tag must be between 55-60 characters in length
+* The meta description [must be below 300 characters in length](https://moz.com/blog/how-long-should-your-meta-description-be-2018)
+* There must only be one `h1` tag on the page
+* Header tags (`h1, h2, h3`...) must be used chronologically, e.g.
+  * A `h3` tag must not be used unless a `h2` tag has been used
+  * A `h4` tag must not be used unless a `h3` tag has been used
+  * A `h6` tag must not be used unless a `h5` tag has been used
+* All `img` tags must have an `alt` attribute
 
-Upload to CDN, flush
+## Screenshot
 
-# Set up
+![SEO Tool example](https://content.screencast.com/users/RobinAO/folders/Jing/media/5005c319-2618-4f60-9bf8-37ab6b7ca35f/2018-03-13_0841.png "SEO Tool example")
 
-* Open chrome -> more tools -> extensions
-* Load unpacked extension -> point to folder containing these files
-* Click the icon on your browser to run!
+## Set up
+
+* Clone the repo (or download and unzip)
+* Open Chrome -> More tools -> Extensions
+* Load unpacked extension -> point to folder containing the files
+* Click the ![Extension icon](https://content.screencast.com/users/RobinAO/folders/Jing/media/5ea8af8f-18ba-44eb-a348-2236cc9f3c75/2018-03-13_0845.png "Extension icon") icon on your browser to run!

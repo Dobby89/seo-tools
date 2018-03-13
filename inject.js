@@ -82,17 +82,17 @@
             snippet: `<code>${htmlEscape('<meta name="description" content="">')}</code>`,
             message: `No Meta Description has been found. <b>Every</b> page must contain a Meta Description.`
         });
-    } else if (domMetaDesc.content.length > 160) {
+    } else if (domMetaDesc.content.length > 360) {
         // warning
         validationMessages.metaData.warningArray.push({
             snippet: `<code>${htmlEscape(domMetaDesc.outerHTML)}</code>`,
-            message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is more than the recommended <b>160</b> characters.`
+            message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is more than the recommended <b>360</b> characters.`
         });
     } else {
         // success
         validationMessages.metaData.successArray.push({
             snippet: `<code>${htmlEscape(domMetaDesc.outerHTML)}</code>`,
-            message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is within the recommended <b>160</b> character limit.`
+            message: `The Meta Description is <b>${domMetaDesc.content.length}</b> characters, which is within the recommended <b>360</b> character limit.`
         });
     }
 
