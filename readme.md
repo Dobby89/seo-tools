@@ -13,11 +13,11 @@ A simple Google Chrome extension which validates the HTML markup against the fol
 
 ## Screenshot
 
-![SEO Tool example](https://content.screencast.com/users/RobinAO/folders/Jing/media/c2ca5d21-3cf4-4f18-b9e7-2df51549ba51/2018-03-13_0908.png "SEO Tool example")
+![SEO Tool example](http://drive.google.com/uc?export=view&id=1XEwxZ8wNgQbFm9q8Xtpbo3bleG_3ihJW "SEO Tool example")
 
 ## Set up
 
 * Clone the repo (or download and unzip)
 * Open Chrome -> More tools -> Extensions
 * Load unpacked extension -> point to folder containing the files
-* Click the ![Extension icon](https://content.screencast.com/users/RobinAO/folders/Jing/media/5ea8af8f-18ba-44eb-a348-2236cc9f3c75/2018-03-13_0845.png "Extension icon") icon on your browser to run!
+* Click the ![Extension icon](http://drive.google.com/uc?export=view&id=1Qr6RHrxx9R_k4ABzuiyoOtN45hVAhDQd "Extension icon") icon on your browser to run!
